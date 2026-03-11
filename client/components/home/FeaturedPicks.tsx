@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function NewArrivals() {
+export default function FeaturedPicks() {
 	return (
 		<section id="new" className="relative w-full py-8 flex flex-col">
 				<Image
@@ -9,11 +9,15 @@ export default function NewArrivals() {
 					fill
 					sizes="100vw"
 					priority
-					className="object-cover object-right brightness-100 mix-blend-hard-light -z-50"
+					className="object-cover object-left brightness-100 mix-blend-hard-light -z-50"
 					/>
 
 
-			<h3 className="p-4 text-[32px] font-big-shoulders tracking-[0.1em] font-semibold uppercase">New Arrivals</h3>
+			<h3 className="p-4 text-[32px] font-big-shoulders tracking-[0.1em] font-semibold uppercase">Featured Picks</h3>
+			<div className="flex">
+		<h4 className="p-4 text-[20px] font-big-shoulders tracking-[0.1em] font-semibold uppercase">Tops</h4>
+			<h4 className="p-4 text-[20px] font-big-shoulders tracking-[0.1em] font-semibold uppercase opacity-50">Jackets</h4>
+			</div>
 			<div className="w-full backdrop-blur-xs shadow-xl flex overflow-x-scroll">
 
 				{Array.from({ length: 4 }).map((_, i) => (
