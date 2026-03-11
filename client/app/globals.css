@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root {
+  --background: #171717;
+  --foreground: #ffffff;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-big-shoulders: var(--font-big-shoulders);
+}
+
+@layer components {
+  h1, h2 {
+    @apply font-big-shoulders;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
