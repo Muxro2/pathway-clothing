@@ -1,11 +1,19 @@
+"use client"
+
+import { motion, useScroll, useTransform } from "framer-motion";
+
 import Image from "next/image";
 import TopBar from "@/components/TopBar"
 
 export default function NavBar() {
+	const { scrollY } = useScroll();
+	const blur = useTransform(scrollY, [0, 100], ['(0px)', 'blur(4px)'])
+	const boxShadow = useTransform(scrollY, [0, 100], ['0 0px 0px rgba(0,0,0,0)', '0 4px 8px rgba(0, 0, 0, 0.5)'])
+	
 	return (
 		<nav className="fixed w-full z-100">
 			<TopBar />
-			<div className="flex justify-between items-center p-4 drop-shadow-[0_4px_8px_rgba(0,0,0,.5)]">
+			<motion.div style={{ backdropFilter: blur, boxShadow }} className="flex justify-between items-center p-4">
 				
 
 					<Image
@@ -36,7 +44,7 @@ export default function NavBar() {
 					/>
 				
 				
-			</div>
+			</motion.div>
 		</nav>
 	);
 }

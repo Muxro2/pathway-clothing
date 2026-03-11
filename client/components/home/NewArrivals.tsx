@@ -19,7 +19,7 @@ export default function NewArrivals() {
 			<div className="w-full backdrop-blur-xs shadow-xl flex overflow-x-scroll">
 
 				{Array.from({ length: 4 }).map((_, i) => (
-			<div id="i" className="flex-shrink-0 w-[50%] p-4 flex flex-col gap-2 text-center">
+			<div key={i} className="flex-shrink-0 w-[50%] p-4 flex flex-col gap-2 text-center">
 				<Image
 					src="/products/white_tee.png"
 					alt="White T-Shirt"
