@@ -2,14 +2,14 @@ import Image from "next/image";
 
 export default function Bestseller() {
 	return (
-		<section id="bestseller" className="relative w-full aspect-square py-8 flex flex-col">
+		<section id="bestseller" className="relative w-full aspect-square py-8 flex flex-col justify-end">
 				<Image
 					src="/images/bestseller.jpeg"
 					alt="Hero"
 					fill
 					sizes="100vw"
 					priority
-					className="object-cover object-center brightness-100 mix-blend-hard-light -z-50"
+					className="object-cover object-center -z-50 contrast-120 saturate-60 brightness-80"
 					/>
 
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Bestseller() {
+export default function Member() {
 	return (
 		<section id="bestseller" className="relative w-full aspect-square py-8 flex flex-col shadow-lg">
 				<Image

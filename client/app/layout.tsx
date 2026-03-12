@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Big_Shoulders } from "next/font/google";
 import "./globals.css";
 
-import NavBar from '@/components/NavBar'
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 const bigShoulders = Big_Shoulders({
   variable: "--font-big-shoulders",
@@ -26,6 +27,7 @@ export default function RootLayout({
       >
         <NavBar />
         {children}
+        <Footer />
       </body>
     </html>
   );
