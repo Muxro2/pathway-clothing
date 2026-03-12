@@ -1,8 +1,12 @@
+"use client"
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import SpinningLogo from "@/components/SpinningLogo"
 
 export default function Hero() {
+  const router = useRouter()
+	
 	return (
 		<section id="hero" className="relative w-full h-160">
 		  <Image
@@ -24,7 +28,7 @@ export default function Hero() {
 				<SpinningLogo />
 
 				<div className="w-full flex mb-2">
-				<button className="flex-1 text-white text-[16px] font-bold">SHOP NOW</button>
+				<button onClick={() => router.push('/catalog')} className="flex-1 text-white text-[16px] font-bold">SHOP NOW</button>
 					<div className="w-px h-8 bg-white"/>
 					<button className="flex-1 text-white text-[16px] font-bold">MEMBERS CLUB</button>
 				</div>

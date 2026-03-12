@@ -14,7 +14,7 @@ export type Product = {
 export type ProductVariant = {
 	id: string;
 	sku: string;
-	price: string;
+	price: { amount: string };
 	compareAtPrice: string | null;
 	inventoryQuantity: number;
 	requiresShipping: boolean;

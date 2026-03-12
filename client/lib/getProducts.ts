@@ -1,4 +1,5 @@
 import { shopifyFetch } from "./shopify"
+import { Product } from "@/types/productTypes";
 
 export async function getProducts() {
 	const data = await shopifyFetch(`
@@ -54,3 +55,9 @@ return data.data.products.edges.map((edge: any) => {
 	};
 });
 }
+
+export async function getProduct(handle: string) {
+  const products = await getProducts();
+  return products.find((p: Product) => p.handle === handle);
+}
+

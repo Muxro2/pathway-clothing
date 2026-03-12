@@ -33,7 +33,7 @@ export default async function NewArrivals() {
 							className="w-full aspect-2/3 object-cover object-center"
 						/>
 						<h4 className="text-[20px] font-big-shoulders tracking-[0.1em] font-semibold">{product.title}</h4>
-						<p className="font-mono font-thin">£{(product.variants[0]?.price as any).amount}</p>
+						<p className="font-mono font-thin">£{parseFloat(product.variants[0]?.price.amount).toFixed(2)}</p>
 
 
 					</div>
