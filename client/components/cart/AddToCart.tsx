@@ -11,7 +11,7 @@ export default function AddToCart({ merchandiseId }: { merchandiseId: string }) 
 	}
 
 	return (
-		<button onClick={handleAddToCart}>
+		<button onClick={handleAddToCart} className="my-4 p-4 border-1 border-white">
 			Add to Cart
 		</button>
 	)

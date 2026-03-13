@@ -11,16 +11,16 @@ export default function Menu({isMenuOpen, setIsMenuOpen}: {isMenuOpen: boolean, 
 		<AnimatePresence>
 			{isMenuOpen &&
 <motion.div 
-	initial={{ y: "-100%", opacity: 0 }}
-	animate={{ y: 0, opacity: 1 }}
-	exit={{ y: "-100%", opacity: 0 }}
+	initial={{ x: "-100%", opacity: 0 }}
+	animate={{ x: 0, opacity: 1 }}
+	exit={{ x: "-100%", opacity: 0 }}
 	transition={{ type: "tween", duration: 0.3 }}
 	className="fixed top-0 w-full">
 		<main className="menu pt-32 px-4 w-full z-90 h-screen bg-black">
 			  <motion.nav
-					initial={{ y: "-50%", opacity: 0 }}
-					animate={{ y: 0, opacity: 1 }}
-					exit={{ y: "-50%", opacity: 0 }}
+					initial={{ x: "-50%", opacity: 0 }}
+					animate={{ x: 0, opacity: 1 }}
+					exit={{ x: "-50%", opacity: 0 }}
 					transition={{ type: "tween", duration: 0.2, delay: 0.2 }}
 					className="flex flex-col text-center gap-2">
         <section>
