@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"; 
 import Link from "next/link";
 
-export default function Menu({isMenuOpen}: {isMenuOpen: boolean}) {
+export default function Menu({isMenuOpen, setIsMenuOpen}: {isMenuOpen: boolean, setIsMenuOpen: (isMenuOpen: boolean) => void}) {
 
   
 	

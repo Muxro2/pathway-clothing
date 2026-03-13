@@ -27,7 +27,7 @@ export default function NavBar() {
 	
 	return (
 		<>
-			<Menu isMenuOpen={isMenuOpen}/>
+			<Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
 		<nav className="fixed top-0 w-full z-100">
 			
 			<TopBar />
