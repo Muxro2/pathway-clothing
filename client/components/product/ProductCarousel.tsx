@@ -17,7 +17,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 	const maskImage = useTransform(
 		[maskLeft, maskRight],
 		([left, right]) =>
-			`linear-gradient(to right, transparent 0%, black ${left}%, black ${100-right}%, transparent 100%)`
+			`linear-gradient(to right, transparent 0%, black ${left}%, black ${100-(right as any)}%, transparent 100%)`
 	);
 
 	return (
