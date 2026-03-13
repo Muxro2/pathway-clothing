@@ -12,15 +12,16 @@ export type Product = {
 };
 
 export type ProductVariant = {
-	id: string;
-	sku: string;
-	price: { amount: string };
-	compareAtPrice: string | null;
-	inventoryQuantity: number;
-	requiresShipping: boolean;
-	taxable: boolean;
-	options: Record<string, string>; // e.g. { Size: "M", Color: "Black" }
-};
+	id: string
+	sku: string
+	price: { amount: string }
+	compareAtPrice: { amount: string } | null
+	quantityAvailable: number
+	requiresShipping: boolean
+	taxable: boolean
+	selectedOptions: { name: string, value: string }[]
+}
+
 
 export type ProductImage = {
 	src: string;
