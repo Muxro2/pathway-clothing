@@ -1,9 +1,12 @@
+
+
 import type { Metadata } from "next";
 import { Big_Shoulders } from "next/font/google";
 import "./globals.css";
 
-import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
+import NavBar from '@/components/layout/NavBar';
+
+import Footer from '@/components/layout/Footer';
 
 const bigShoulders = Big_Shoulders({
   variable: "--font-big-shoulders",
@@ -19,13 +22,14 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) { 
   return (
     <html lang="en">
       <body
         className={`${bigShoulders.variable} antialiased`}
       >
         <NavBar />
+        
         {children}
         <Footer />
       </body>

@@ -23,7 +23,7 @@ export default function FeaturedPicksTabs({ tops, jackets }: { tops: Product[], 
 				>Jackets</h4>
 			</div>
 			<div className="w-full flex overflow-x-scroll">
-				<ProductCarousel products={products} />
+				<ProductCarousel products={products}/>
 			</div>
 		</>
 	);

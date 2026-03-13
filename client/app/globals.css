@@ -39,7 +39,11 @@
     @apply text-[16px];
   }
 
- 
+
+  .menu ul {
+    @apply text-[24px];
+  }
+  
   .privacy-policy section,
   .terms-and-conditions section,
   .returns section {

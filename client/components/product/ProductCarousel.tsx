@@ -28,7 +28,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 		>
 			
 			{products.map((product: Product) => (
-				<ProductCard key={product.id} product={product} />
+				<ProductCard key={product.id} product={product} className="w-[40%]"/>
 			))}
 		</motion.div>
 	);
