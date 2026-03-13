@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
 	return (
@@ -11,9 +12,13 @@ export default function Footer() {
 					/>
 			<p className="">© 2026 Pathway. All rights reserved.</p>
 			<div className="w-full py-4 flex justify-between gap-4">
-				<p className="flex-1">Privacy<br/>Policy</p>
+				<Link href="/privacy-policy" className="flex-1"><p>Privacy<br/>Policy</p></Link>
+				<Link href="/terms-and-conditions" className="flex-1">
 				<p className="flex-1">Terms & Conditions</p>
+				</Link>
+				<Link href="/returns" className="flex-1">
 				<p className="flex-1">Returns</p>
+					</Link>
 			</div>
 
 				<div className="flex gap-4 opacity-60">

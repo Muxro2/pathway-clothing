@@ -11,7 +11,7 @@ export default function NavBar() {
 	const boxShadow = useTransform(scrollY, [0, 100], ['0 0px 0px rgba(0,0,0,0)', '0 4px 8px rgba(0, 0, 0, 0.5)'])
 	
 	return (
-		<nav className="fixed w-full z-100">
+		<nav className="fixed top-0 w-full z-100">
 			<TopBar />
 			<motion.div style={{ backdropFilter: blur, boxShadow }} className="flex justify-between items-center p-4">
 				

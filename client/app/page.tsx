@@ -8,7 +8,7 @@ import Member from "@/components/home/Member";
 
 export default function Home() {
 	return (
-		<main>
+		<main className="p-0">
 		  <Hero />
 			<NewArrivals />
 			<Bestseller />

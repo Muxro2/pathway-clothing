@@ -9,7 +9,7 @@ export default async function Catalog() {
 
   
   return (
-    <main className="relative w-full pt-24">
+    <main>
       <Image
 				src="/backgrounds/london.jpeg"
 				alt="Hero"

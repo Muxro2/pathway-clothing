@@ -13,7 +13,7 @@ export default function Hero() {
 				src="/images/hero.jpeg"
 				alt="Hero"
 				fill
-				sizes="100vw"
+				sizes="110vw"
 				priority
 				className="object-cover brightness-85"
 				/>

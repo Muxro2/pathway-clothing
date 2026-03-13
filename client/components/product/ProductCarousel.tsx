@@ -1,0 +1,35 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Product } from "@/types/productTypes";
+import ProductCard from "./ProductCard";
+
+export default function ProductCarousel({ products }: { products: Product[] }) {
+	const ref = useRef<HTMLDivElement>(null);
+
+	const { scrollXProgress } = useScroll({ container: ref });
+
+	const maskLeft = useTransform(scrollXProgress, [0, 0.1], [0, 4]);
+	const maskRight = useTransform(scrollXProgress, [0.9, 1], [4, 0]);
+
+
+	const maskImage = useTransform(
+		[maskLeft, maskRight],
+		([left, right]) =>
+			`linear-gradient(to right, transparent 0%, black ${left}%, black ${100-right}%, transparent 100%)`
+	);
+
+	return (
+		<motion.div
+			ref={ref}
+			style={{ maskImage }}
+			className="w-full p-4 flex gap-2 overflow-x-scroll"
+		>
+			
+			{products.map((product: Product) => (
+				<ProductCard key={product.id} product={product} />
+			))}
+		</motion.div>
+	);
+}
