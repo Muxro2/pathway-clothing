@@ -7,8 +7,6 @@ import { Product } from "@/types/productTypes";
 import ProductCard from "@/components/product/ProductCard";
 
   export default async function Catalog({ searchParams }: { searchParams?: Promise<{ sort?: string, category?: string }> }) {
-    
-    export default async function Catalog({ searchParams }: { searchParams?: Promise<{ sort?: string, category?: string }> }) {
       
       const resolvedParams = await searchParams
       const category = resolvedParams?.category ?? "all"
