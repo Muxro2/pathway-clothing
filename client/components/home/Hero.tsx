@@ -28,10 +28,10 @@ export default function Hero() {
 
 				<SpinningLogo />
 
-				<div className="w-full flex mb-2">
-				<button onClick={() => router.push('/catalog')} className="flex-1 text-white text-[16px] font-bold">SHOP NOW</button>
+				<div className="w-full flex mb-2 items-center">
+				<Link href='/catalog' className="flex-1 text-white text-[16px] font-bold text-center">SHOP NOW</Link>
 					<div className="w-px h-8 bg-white"/>
-					<Link href="/members" className="flex-1 text-white text-[16px] font-bold">MEMBERS CLUB</Link>
+					<Link href="/members" className="flex-1 text-white text-[16px] font-bold text-center">MEMBERS CLUB</Link>
 				</div>
 				
 			</div>

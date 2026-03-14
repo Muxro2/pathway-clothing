@@ -2,6 +2,7 @@
 import { getProducts } from "@/lib/getProducts"
 import { Product } from "@/types/productTypes"
 import ProductCard from "@/components/product/ProductCard"
+import LogoutButton from "@/components/auth/LogoutButton"
 
 export default async function MembersPage() {
   const products = await getProducts()
@@ -12,11 +13,14 @@ export default async function MembersPage() {
       <div className="flex flex-col gap-12 px-6 py-12">
 
         {/* Header */}
-        <div className="flex flex-col gap-3">
-          <h2 className="font-big-shoulders tracking-[0.1em] uppercase">Members Only</h2>
-          <p className="font-mono font-thin text-sm text-white/50 max-w-sm">
-            Early access to drops before anyone else. You're in.
-          </p>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3">
+            <h2 className="font-big-shoulders tracking-[0.1em] uppercase">Members Only</h2>
+            <p className="font-mono font-thin text-sm text-white/50 max-w-sm">
+              Early access to drops before anyone else. You're in.
+            </p>
+          </div>
+          <LogoutButton />
         </div>
 
         {/* Discount Code */}

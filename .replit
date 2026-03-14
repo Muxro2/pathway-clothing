@@ -24,3 +24,14 @@ externalPort = 3001
 [[ports]]
 localPort = 3002
 externalPort = 3002
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Bh"
+mode = "sequential"
+author = 36997714
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "find . -name \"LogoutButton*\" -not -path \"*/node_modules/*\""

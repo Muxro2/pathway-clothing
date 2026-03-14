@@ -5,8 +5,8 @@ import { shopifyFetch } from "@/lib/shopify"
 
 type Mode = "login" | "register"
 
-export default function LoginForm() {
-	const [mode, setMode] = useState<Mode>("login")
+export default function LoginForm({requestedMode}: {requestedMode?: Mode}) {
+	const [mode, setMode] = useState<Mode>(requestedMode || "login")
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [firstName, setFirstName] = useState("")
