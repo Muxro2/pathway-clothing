@@ -48,7 +48,7 @@ useEffect(() => {
 		<div className="flex flex-col gap-4">
 
 			{/* Image Slider */}
-			<div ref={sliderRef} className="overflow-x-auto flex snap-x snap-mandatory scrollbar-none">
+			<div ref={sliderRef} className="overflow-x-auto flex snap-x snap-mandatory scrollbar-none bg-black">
 				{allImages.map((image, i) => (
 					<div key={i} className="snap-center shrink-0 w-full">
 						<Image
@@ -56,6 +56,7 @@ useEffect(() => {
 							alt={image?.altText ?? product.title}
 							width={200}
 							height={300}
+							sizes="40vw"
 							className="mx-auto w-[70%] aspect-2/3 object-cover object-center"
 						/>
 					</div>

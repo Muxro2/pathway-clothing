@@ -12,6 +12,7 @@ return(
 							alt={product.images[0]?.altText ?? product.title}
 							width={200}
 							height={300}
+							sizes="40vw"
 							className="w-full aspect-2/3 object-cover object-center"
 						/>
 	
