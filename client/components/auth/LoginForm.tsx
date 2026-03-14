@@ -18,22 +18,19 @@ export default function LoginForm() {
 		setLoading(true)
 		setError("")
 		const data = await shopifyFetch(`
-			mutation {
-				customerAccessTokenCreate(input: {
-					email: "${email}",
-					password: "${password}"
-				}) {
+			mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+				customerAccessTokenCreate(input: $input) {
 					customerAccessToken { accessToken expiresAt }
 					customerUserErrors { message }
 				}
 			}
-		`)
+		`, { input: { email, password } })
 
 		const result = data.data.customerAccessTokenCreate
 		if (result.customerUserErrors.length > 0) {
 			setError(result.customerUserErrors[0].message)
 		} else {
-			document.cookie = `shopify_token=${result.customerAccessToken.accessToken}; path=/; max-age=${60 * 60 * 24 * 7}`
+			document.cookie = `shopify_token=${result.customerAccessToken.accessToken}; path=/; max-age=${60 * 60 * 24 * 7}; Secure; SameSite=Strict`
 			window.location.href = "/members"
 		}
 		setLoading(false)
@@ -43,18 +40,16 @@ export default function LoginForm() {
 		setLoading(true)
 		setError("")
 		const data = await shopifyFetch(`
-			mutation {
-				customerCreate(input: {
-					firstName: "${firstName}",
-					lastName: "${lastName}",
-					email: "${email}",
-					password: "${password}"
-				}) {
+			mutation customerCreate($input: CustomerCreateInput!) {
+				customerCreate(input: $input) {
 					customer { id }
 					customerUserErrors { message }
 				}
 			}
-		`)
+		`, { input: { firstName, lastName, email, password } })
+		console.log(data)
+		console.log("Full response:", JSON.stringify(data, null, 2))
+
 
 		const result = data.data.customerCreate
 		if (result.customerUserErrors.length > 0) {
