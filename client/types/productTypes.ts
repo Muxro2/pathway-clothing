@@ -9,6 +9,7 @@ export type Product = {
 	status: "active" | "draft" | "archived";
 	variants: ProductVariant[];
 	images: ProductImage[];
+	colorSizes: Record<string, string[]>;
 };
 
 export type ProductVariant = {
@@ -19,6 +20,7 @@ export type ProductVariant = {
 	quantityAvailable: number
 	requiresShipping: boolean
 	taxable: boolean
+	images?: { src: string, altText?: string }
 	selectedOptions: { name: string, value: string }[]
 }
 

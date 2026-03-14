@@ -17,9 +17,9 @@ return(
 	
 						<h4 className="mt-4 px-2 text-[16px] font-big-shoulders font-semibold leading-[1.2em]">{product.title}</h4>
 						<p className="mt-1 text-[12px] font-mono tracking-[0.1em] font-medium">£{parseFloat(product.variants[0]?.price?.amount).toFixed(2)}
-							{product.variants.length > 1 &&
+							{Object.keys(product.colorSizes).length > 1 &&
 							<span className="text-[10px]"><br/>
-								{product.variants.length} Colours
+								{Object.keys(product.colorSizes).length} Colours
 							</span>
 							}
 						</p>

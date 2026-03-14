@@ -27,21 +27,8 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
 				<p>{product.title}</p>
 			</div>
 
-			<div className="flex flex-col gap-4">
-				{/* images */}
-				<div className="flex flex-col gap-2">
-					{product.images.map((image: any, i: number) => (
-						<Image
-							key={i}
-							src={image.src || "/products/white_tee.png"}
-							alt={image.altText ?? product.title}
-							width={200}
-							height={300}
-							className="mx-auto w-[70%] aspect-2/3 object-cover object-center"
-						/>
-					))}
-				</div>
-
+				
+				<div className="flex flex-col gap-4">
 				{/* interactive */}
 				<ProductInteractive product={product} />
 			</div>
