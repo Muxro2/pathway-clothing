@@ -10,8 +10,11 @@ export default function ProductInteractive({ product }: { product: Product }) {
 	const sliderRef = useRef<HTMLDivElement>(null)
 
 	const colors = Object.keys(product?.colorSizes)
-	const [selectedColor, setSelectedColor] = useState<string>(colors[0])
+	const hasColors = colors.length > 0
+
+	const [selectedColor, setSelectedColor] = useState<string>(colors[0] ?? "")
 	const [imageLoaded, setImageLoaded] = useState(false)
+	const [activeIndex, setActiveIndex] = useState(0)
 
 	const sizesForColor = product.variants.filter((v: any) =>
 		v.selectedOptions?.find((o: any) => o.name === "Color")?.value === selectedColor
@@ -33,34 +36,67 @@ export default function ProductInteractive({ product }: { product: Product }) {
 		setSelectedVariant(firstAvailable ?? product.variants[0])
 	}
 
-	const currentImage = product.images[colors.indexOf(selectedColor)] ?? product.images[0]
-	const extraImages = product.images.slice(colors.length)
+	const handleScroll = () => {
+		if (sliderRef.current) {
+			const index = Math.round(sliderRef.current.scrollLeft / sliderRef.current.offsetWidth)
+			setActiveIndex(index)
+		}
+	}
+
+	const currentImage = hasColors
+		? product.images[colors.indexOf(selectedColor)] ?? product.images[0]
+		: product.images[0]
+
+	const extraImages = product.images.slice(hasColors ? colors.length : 1)
 	const allImages = [currentImage, ...extraImages]
 
 	useEffect(() => {
 		sliderRef.current?.scrollTo({ left: 0, behavior: "smooth" })
+		setActiveIndex(0)
 	}, [selectedColor])
 
 	return (
 		<div className="flex flex-col">
 
 			{/* Image Slider */}
-			<div ref={sliderRef} className="overflow-x-auto flex snap-x snap-mandatory scrollbar-none bg-black">
-				{allImages.map((image, i) => (
-					<div key={i} className="snap-center shrink-0 w-full">
-						<Image
-							src={image?.src || "/products/white_tee.png"}
-							alt={image?.altText ?? product.title}
-							width={600}
-							height={900}
-							sizes="(min-width: 768px) 50vw, 100vw"
-							priority={i === 0}
-							onLoad={() => { if (i === 0) setImageLoaded(true) }}
-							style={i === 0 ? { opacity: imageLoaded ? 1 : 0, transition: "opacity 0.3s ease" } : {}}
-							className="mx-auto w-full aspect-2/3 object-cover object-center"
-						/>
+			<div className="relative">
+				<div
+					ref={sliderRef}
+					onScroll={handleScroll}
+					className="overflow-x-auto flex snap-x snap-mandatory scrollbar-none bg-black"
+				>
+					{allImages.map((image, i) => (
+						<div key={i} className="snap-center shrink-0 w-full">
+							<Image
+								src={image?.src || "/products/white_tee.png"}
+								alt={image?.altText ?? product.title}
+								width={600}
+								height={900}
+								sizes="(min-width: 768px) 50vw, 100vw"
+								priority={i === 0}
+								onLoad={() => { if (i === 0) setImageLoaded(true) }}
+								style={i === 0 ? { opacity: imageLoaded ? 1 : 0, transition: "opacity 0.3s ease" } : {}}
+								className="mx-auto w-full aspect-2/3 object-cover object-center"
+							/>
+						</div>
+					))}
+				</div>
+
+				{/* Dot Indicators */}
+				{allImages.length > 1 && (
+					<div className="flex justify-center items-center gap-1.5 py-3">
+						{allImages.map((_, i) => (
+							<div
+								key={i}
+								className={`rounded-full transition-all duration-300 ${
+									activeIndex === i
+										? "w-4 h-1 bg-white"
+										: "w-1 h-1 bg-white/30"
+								}`}
+							/>
+						))}
 					</div>
-				))}
+				)}
 			</div>
 
 			{/* Details */}
@@ -77,26 +113,28 @@ export default function ProductInteractive({ product }: { product: Product }) {
 				</div>
 
 				{/* Color Selector */}
-				<div className="flex flex-col gap-3">
-					<p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
-						Colour — <span className="text-white">{selectedColor}</span>
-					</p>
-					<div className="flex gap-2 flex-wrap">
-						{colors.map((color) => (
-							<button
-								key={color}
-								onClick={() => handleColorSelect(color)}
-								className={`px-4 py-2 font-mono text-[11px] tracking-widest uppercase transition-colors border ${
-									selectedColor === color
-										? "border-white text-white"
-										: "border-white/20 text-white/40 hover:border-white/50"
-								}`}
-							>
-								{color}
-							</button>
-						))}
+				{hasColors && (
+					<div className="flex flex-col gap-3">
+						<p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
+							Colour — <span className="text-white">{selectedColor}</span>
+						</p>
+						<div className="flex gap-2 flex-wrap">
+							{colors.map((color) => (
+								<button
+									key={color}
+									onClick={() => handleColorSelect(color)}
+									className={`px-4 py-2 font-mono text-[11px] tracking-widest uppercase transition-colors border ${
+										selectedColor === color
+											? "border-white text-white"
+											: "border-white/20 text-white/40 hover:border-white/50"
+									}`}
+								>
+									{color}
+								</button>
+							))}
+						</div>
 					</div>
-				</div>
+				)}
 
 				{/* Size Selector */}
 				<div className="flex flex-col gap-3">

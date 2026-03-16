@@ -21,7 +21,7 @@ export default function Footer() {
 						alt="Pathway"
 						width={100}
 						height={28}
-						className="object-contain"
+						className="object-cover"
 					/>
 					<p className="font-mono text-[11px] text-white/30 tracking-widest uppercase max-w-[200px] leading-relaxed">
 						Step. Don't Follow.
