@@ -34,7 +34,7 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
 			</div>
 
 			{/* Product Layout */}
-			<div className="md:grid md:grid-cols-2 md:gap-8 md:px-8 md:items-start">
+			<div className="md:w-[30%] mx-auto">
 				<ProductInteractive product={product} />
 			</div>
 
