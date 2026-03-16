@@ -1,4 +1,3 @@
-// components/product/ProductInteractive.tsx
 "use client"
 import { useState, useEffect, useRef } from "react"
 import { Product, ProductVariant } from "@/types/productTypes"
@@ -43,6 +42,15 @@ export default function ProductInteractive({ product }: { product: Product }) {
 		}
 	}
 
+	const scrollImage = (direction: "left" | "right") => {
+		if (sliderRef.current) {
+			sliderRef.current.scrollBy({
+				left: direction === "right" ? sliderRef.current.offsetWidth : -sliderRef.current.offsetWidth,
+				behavior: "smooth"
+			})
+		}
+	}
+
 	const currentImage = hasColors
 		? product.images[colors.indexOf(selectedColor)] ?? product.images[0]
 		: product.images[0]
@@ -59,7 +67,24 @@ export default function ProductInteractive({ product }: { product: Product }) {
 		<div className="flex flex-col">
 
 			{/* Image Slider */}
-			<div className="relative">
+			<div className="relative group">
+
+				{/* Left Arrow */}
+				<button
+					onClick={() => scrollImage("left")}
+					className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center border border-white/20 bg-black/60 backdrop-blur-sm hover:border-white transition-colors opacity-0 group-hover:opacity-100"
+				>
+					<span className="font-mono text-white text-lg">←</span>
+				</button>
+
+				{/* Right Arrow */}
+				<button
+					onClick={() => scrollImage("right")}
+					className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center border border-white/20 bg-black/60 backdrop-blur-sm hover:border-white transition-colors opacity-0 group-hover:opacity-100"
+				>
+					<span className="font-mono text-white text-lg">→</span>
+				</button>
+
 				<div
 					ref={sliderRef}
 					onScroll={handleScroll}
