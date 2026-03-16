@@ -13,11 +13,10 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 	const maskLeft = useTransform(scrollXProgress, [0, 0.1], [0, 4]);
 	const maskRight = useTransform(scrollXProgress, [0.9, 1], [4, 0]);
 
-
 	const maskImage = useTransform(
 		[maskLeft, maskRight],
 		([left, right]) =>
-			`linear-gradient(to right, transparent 0%, black ${left}%, black ${100-(right as any)}%, transparent 100%)`
+			`linear-gradient(to right, transparent 0%, black ${left}%, black ${100 - (right as any)}%, transparent 100%)`
 	);
 
 	return (
@@ -26,9 +25,8 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 			style={{ maskImage }}
 			className="w-full p-4 flex gap-2 overflow-x-scroll"
 		>
-			
-			{products.map((product: Product) => (
-				<ProductCard key={product.id} product={product} className="w-[40%]"/>
+			{products.map((product: Product, i: number) => (
+				<ProductCard key={product.id} product={product} className="w-[40%]" priority={i < 2} />
 			))}
 		</motion.div>
 	);

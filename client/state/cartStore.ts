@@ -21,6 +21,7 @@ type CartStore = {
 	checkoutUrl: string | null
 	lines: CartLine[]
 	setCart: (cartId: string, checkoutUrl: string, lines: CartLine[]) => void
+	setLines: (lines: CartLine[]) => void
 	clearCart: () => void
 }
 
@@ -31,6 +32,7 @@ export const useCartStore = create<CartStore>()(
 			checkoutUrl: null,
 			lines: [],
 			setCart: (cartId, checkoutUrl, lines) => set({ cartId, checkoutUrl, lines }),
+			setLines: (lines) => set({ lines }),
 			clearCart: () => set({ cartId: null, checkoutUrl: null, lines: [] })
 		}),
 		{ name: "shopify-cart" }

@@ -7,12 +7,11 @@ import AddToCart from "@/components/cart/AddToCart"
 
 export default function ProductInteractive({ product }: { product: Product }) {
 
-
-
 	const sliderRef = useRef<HTMLDivElement>(null)
 
 	const colors = Object.keys(product?.colorSizes)
 	const [selectedColor, setSelectedColor] = useState<string>(colors[0])
+	const [imageLoaded, setImageLoaded] = useState(false)
 
 	const sizesForColor = product.variants.filter((v: any) =>
 		v.selectedOptions?.find((o: any) => o.name === "Color")?.value === selectedColor
@@ -26,6 +25,7 @@ export default function ProductInteractive({ product }: { product: Product }) {
 
 	const handleColorSelect = (color: string) => {
 		setSelectedColor(color)
+		setImageLoaded(false)
 		const firstAvailable = product.variants.find((v: any) =>
 			v.selectedOptions?.find((o: any) => o.name === "Color")?.value === color &&
 			v.quantityAvailable > 0
@@ -37,13 +37,10 @@ export default function ProductInteractive({ product }: { product: Product }) {
 	const extraImages = product.images.slice(colors.length)
 	const allImages = [currentImage, ...extraImages]
 
+	useEffect(() => {
+		sliderRef.current?.scrollTo({ left: 0, behavior: "smooth" })
+	}, [selectedColor])
 
-useEffect(() => {
-    sliderRef.current?.scrollTo({ left: 0, behavior: "smooth" })
-}, [selectedColor])
-
-
-	
 	return (
 		<div className="flex flex-col gap-4">
 
@@ -57,6 +54,9 @@ useEffect(() => {
 							width={200}
 							height={300}
 							sizes="40vw"
+							priority={i === 0}
+							onLoad={() => { if (i === 0) setImageLoaded(true) }}
+							style={i === 0 ? { opacity: imageLoaded ? 1 : 0, transition: "opacity 0.3s ease" } : {}}
 							className="mx-auto w-[70%] aspect-2/3 object-cover object-center"
 						/>
 					</div>

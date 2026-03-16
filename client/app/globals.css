@@ -24,7 +24,9 @@
 @layer base {
   img {
     animation: fadeIn 0.4s ease;
+    background: transparent;
   }
+
 
   @keyframes fadeIn {
     from { opacity: 0; }

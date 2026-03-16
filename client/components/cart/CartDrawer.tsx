@@ -1,3 +1,4 @@
+// components/cart/CartDrawer.tsx
 "use client"
 import { useCartStore } from "@/state/cartStore"
 import { removeFromCartAction, updateCartLineAction } from "@/app/actions/cart"
@@ -5,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 
 export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-	const { cartId, checkoutUrl, lines, setCart, clearCart } = useCartStore()
+	const { cartId, checkoutUrl, lines, setCart, clearCart, setLines } = useCartStore()
 
 	const total = lines.reduce((acc, line) => {
 		return acc + parseFloat(line.merchandise.price.amount) * line.quantity
@@ -13,6 +14,14 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClo
 
 	async function handleRemove(lineId: string) {
 		if (!cartId) return
+		// Optimistic update
+		const optimisticLines = lines.filter(l => l.id !== lineId)
+		if (optimisticLines.length === 0) {
+			clearCart()
+		} else {
+			setLines(optimisticLines)
+		}
+		// Sync with Shopify
 		const cart = await removeFromCartAction(cartId, lineId)
 		if (cart.lines.length === 0) {
 			clearCart()
@@ -27,6 +36,12 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClo
 			handleRemove(lineId)
 			return
 		}
+		// Optimistic update
+		const optimisticLines = lines.map(l =>
+			l.id === lineId ? { ...l, quantity } : l
+		)
+		setLines(optimisticLines)
+		// Sync with Shopify
 		const cart = await updateCartLineAction(cartId, lineId, quantity)
 		setCart(cart.id, cart.checkoutUrl, cart.lines)
 	}
@@ -52,7 +67,6 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClo
 							</div>
 						) : (
 							<>
-								{/* scrollable items */}
 								<div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
 									{lines.map((line) => (
 										<div key={line.id} className="flex gap-4">
@@ -78,7 +92,6 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClo
 									))}
 								</div>
 
-								{/* sticky bottom */}
 								<div className="p-4 flex flex-col gap-4 border-t border-white/10">
 									<div className="flex justify-between">
 										<p>Total</p>
