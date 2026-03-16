@@ -1,8 +1,26 @@
 @import "tailwindcss";
 
+/* ============================================================
+   THEME
+============================================================ */
 :root {
   --background: #000000;
   --foreground: #ffffff;
+  --vh: 1vh;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-big-shoulders: var(--font-big-shoulders);
+}
+
+/* ============================================================
+   GLOBAL
+============================================================ */
+body {
+  background: var(--background);
+  color: var(--foreground);
 }
 
 * {
@@ -14,60 +32,82 @@
   display: none;
 }
 
-
-@theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-big-shoulders: var(--font-big-shoulders);
-}
-
+/* ============================================================
+   BASE STYLES
+============================================================ */
 @layer base {
-  img {
-    animation: fadeIn 0.4s ease;
-    background: transparent;
-  }
 
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
+  /* Layout */
   main {
     @apply pt-24;
   }
-  h1, h2, h3, h4, p, ul {
+
+  /* Typography */
+  h1, h2, h3, h4 {
     @apply font-big-shoulders;
   }
 
   h3 {
     @apply text-[32px];
   }
+
   h4 {
     @apply text-[24px];
   }
-  p {
-    @apply text-[16px];
+
+  /* Images */
+  img {
+    background: transparent;
+    animation: fadeIn 0.4s ease;
   }
 
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-  .menu ul {
-    @apply text-[24px];
+  /* Legal pages */
+  .privacy-policy,
+  .terms-and-conditions,
+  .returns {
+    @apply max-w-2xl mx-auto;
   }
 
   .privacy-policy section,
   .terms-and-conditions section,
   .returns section {
-    @apply flex flex-col gap-4 my-4;
+    @apply flex flex-col gap-4 my-8 text-left;
   }
+
+  .privacy-policy h3,
+  .terms-and-conditions h3,
+  .returns h3 {
+    @apply font-big-shoulders text-[32px] tracking-[0.05em] uppercase leading-none mb-2;
+  }
+
+  .privacy-policy h4,
+  .terms-and-conditions h4,
+  .returns h4 {
+    @apply font-big-shoulders text-[20px] tracking-[0.05em] uppercase leading-none;
+  }
+
+  .privacy-policy p,
+  .terms-and-conditions p,
+  .returns p {
+    @apply font-mono text-[12px] text-white/60 leading-relaxed;
+  }
+
+  .privacy-policy strong,
+  .terms-and-conditions strong,
+  .returns strong {
+    @apply text-white font-mono;
+  }
+
   .privacy-policy ul,
   .terms-and-conditions ul,
   .returns ul {
-    @apply list-disc flex flex-col gap-2 px-[18%];
+    @apply list-disc flex flex-col gap-2 pl-6 font-mono text-[12px] text-white/60 leading-relaxed;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+
 }

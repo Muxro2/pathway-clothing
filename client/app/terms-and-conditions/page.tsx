@@ -1,6 +1,6 @@
 export default function TermsAndConditions() {
 	return (
-		<main className="terms-and-conditions px-4 my-6 text-center">
+		<main className="terms-and-conditions my-6">
 			<section>
 				<h3>Terms and Conditions</h3>
 				<p><strong>Last Updated: March 12, 2026</strong></p>

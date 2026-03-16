@@ -1,10 +1,17 @@
-// components/layout/Menu.tsx
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Menu({ isMenuOpen, setIsMenuOpen }: { isMenuOpen: boolean, setIsMenuOpen: (isMenuOpen: boolean) => void }) {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const token = document.cookie.split(";").find(c => c.trim().startsWith("shopify_token="))
+    setIsLoggedIn(!!token)
+  }, [isMenuOpen])
 
   return (
     <AnimatePresence>
@@ -14,9 +21,12 @@ export default function Menu({ isMenuOpen, setIsMenuOpen }: { isMenuOpen: boolea
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: "-100%", opacity: 0 }}
           transition={{ type: "tween", duration: 0.3 }}
-          className="fixed top-0 left-0 w-full md:w-[380px] h-screen z-[50] bg-black border-r border-white/10"
+          className="fixed top-0 left-0 w-full md:w-[380px] z-[50] bg-black border-r border-white/10"
+          style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
+
         >
-          <div className="pt-32 px-8 flex flex-col gap-10">
+            <div className="pt-32 px-8 pb-8 flex flex-col gap-10 h-full overflow-y-auto">
+
 
             {/* Shop */}
             <div className="flex flex-col gap-3">
@@ -34,6 +44,18 @@ export default function Menu({ isMenuOpen, setIsMenuOpen }: { isMenuOpen: boolea
                   </li>
                 ))}
               </ul>
+            </div>
+
+            {/* Members */}
+            <div className="flex flex-col gap-3">
+              <p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">Members</p>
+              <Link
+                href={isLoggedIn ? "/members" : "/login"}
+                onClick={() => setIsMenuOpen(false)}
+                className="font-big-shoulders text-[28px] tracking-[0.05em] uppercase font-semibold hover:opacity-50 transition-opacity"
+              >
+                {isLoggedIn ? "Members Club" : "Join / Sign In"}
+              </Link>
             </div>
 
             {/* Info */}

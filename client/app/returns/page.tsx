@@ -1,6 +1,6 @@
 export default function Returns() {
 	return (
-		<main className="returns px-4 my-6 text-center">
+		<main className="returns my-6">
 			<section>
 				<h3>Returns Policy</h3>
 				<p><strong>Last Updated: March 12, 2026</strong></p>

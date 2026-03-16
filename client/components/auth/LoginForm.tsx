@@ -5,7 +5,7 @@ import { shopifyFetch } from "@/lib/shopify"
 
 type Mode = "login" | "register"
 
-export default function LoginForm({requestedMode}: {requestedMode?: Mode}) {
+export default function LoginForm({ requestedMode }: { requestedMode?: Mode }) {
 	const [mode, setMode] = useState<Mode>(requestedMode || "login")
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
@@ -47,9 +47,6 @@ export default function LoginForm({requestedMode}: {requestedMode?: Mode}) {
 				}
 			}
 		`, { input: { firstName, lastName, email, password } })
-		console.log(data)
-		console.log("Full response:", JSON.stringify(data, null, 2))
-
 
 		const result = data.data.customerCreate
 		if (result.customerUserErrors.length > 0) {
@@ -60,18 +57,21 @@ export default function LoginForm({requestedMode}: {requestedMode?: Mode}) {
 		setLoading(false)
 	}
 
-	const inputClass = "w-full bg-transparent border-b border-white/30 py-3 text-white font-mono text-sm outline-none placeholder:text-white/30 focus:border-white transition-colors"
+	const inputClass = "w-full bg-transparent border-b border-white/20 py-3 font-mono text-sm text-white outline-none placeholder:text-white/25 focus:border-white transition-colors"
 
 	return (
 		<div className="min-h-screen flex items-center justify-center px-6">
-			<div className="w-full max-w-sm flex flex-col gap-8">
+			<div className="w-full max-w-sm flex flex-col gap-10">
 
 				{/* Header */}
-				<div>
-					<h2 className="font-big-shoulders tracking-[0.1em] uppercase">
-						{mode === "login" ? "Welcome Back" : "Join Pathway"}
+				<div className="flex flex-col gap-2">
+					<p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
+						{mode === "login" ? "Welcome Back" : "New Member"}
+					</p>
+					<h2 className="font-big-shoulders tracking-[0.05em] uppercase leading-none">
+						{mode === "login" ? "Sign In" : "Join Pathway"}
 					</h2>
-					<p className="font-mono font-thin text-sm text-white/50 mt-1">
+					<p className="font-mono text-[12px] text-white/40 leading-relaxed">
 						{mode === "login"
 							? "Sign in for early access to drops and promotions."
 							: "Create an account for exclusive early access."}
@@ -81,7 +81,7 @@ export default function LoginForm({requestedMode}: {requestedMode?: Mode}) {
 				{/* Form */}
 				<div className="flex flex-col gap-6">
 					{mode === "register" && (
-						<div className="flex gap-4">
+						<div className="flex gap-6">
 							<input
 								type="text"
 								placeholder="First Name"
@@ -100,7 +100,7 @@ export default function LoginForm({requestedMode}: {requestedMode?: Mode}) {
 					)}
 					<input
 						type="email"
-						placeholder="Email"
+						placeholder="Email Address"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						className={inputClass}
@@ -114,24 +114,24 @@ export default function LoginForm({requestedMode}: {requestedMode?: Mode}) {
 					/>
 
 					{error && (
-						<p className="font-mono text-xs text-red-400">{error}</p>
+						<p className="font-mono text-[11px] text-red-400 tracking-widest">{error}</p>
 					)}
 
 					<button
 						onClick={mode === "login" ? handleLogin : handleRegister}
 						disabled={loading}
-						className="w-full border border-white py-3 font-big-shoulders tracking-[0.1em] uppercase text-sm hover:bg-white hover:text-black transition-colors disabled:opacity-50"
+						className="w-full py-4 bg-white text-black font-big-shoulders text-[13px] tracking-[0.2em] uppercase font-semibold hover:bg-white/90 transition-colors disabled:opacity-50"
 					>
 						{loading ? "Please wait..." : mode === "login" ? "Sign In" : "Create Account"}
 					</button>
 				</div>
 
 				{/* Toggle */}
-				<p className="font-mono text-xs text-white/40 text-center">
+				<p className="font-mono text-[11px] text-white/30 text-center tracking-widest">
 					{mode === "login" ? "Don't have an account?" : "Already have an account?"}{" "}
 					<button
 						onClick={() => { setMode(mode === "login" ? "register" : "login"); setError("") }}
-						className="text-white underline underline-offset-4"
+						className="text-white/60 underline underline-offset-4 hover:text-white transition-colors"
 					>
 						{mode === "login" ? "Sign Up" : "Sign In"}
 					</button>

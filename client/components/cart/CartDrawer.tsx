@@ -50,11 +50,13 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClo
 					animate={{ x: 0, opacity: 1 }}
 					exit={{ x: "100%", opacity: 0 }}
 					transition={{ type: "tween", duration: 0.3 }}
-					className="fixed top-0 right-0 w-full md:w-[420px] h-screen z-[50] flex flex-col bg-black border-l border-white/10"
+					className="fixed top-0 right-0 w-full md:w-[420px] z-[50] flex flex-col bg-black border-l border-white/10"
+					style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
+
 				>
 
 					{/* Header */}
-					<div className="pt-24 px-6 pb-4 border-b border-white/10 flex items-center justify-between">
+					<div className="pt-24 px-6 pb-4 border-b border-white/10 flex items-center justify-between shrink-0">
 						<h3 className="font-big-shoulders tracking-[0.1em] uppercase">Your Cart</h3>
 						{lines.length > 0 && (
 							<span className="font-mono text-[11px] text-white/40 tracking-widest">
@@ -131,7 +133,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean, onClo
 							</div>
 
 							{/* Footer */}
-							<div className="px-6 py-6 border-t border-white/10 flex flex-col gap-4">
+							<div className="px-6 py-6 pb-10 border-t border-white/10 flex flex-col gap-4 shrink-0">
 								<div className="flex justify-between items-center">
 									<p className="font-mono text-[11px] text-white/40 tracking-widest uppercase">Total</p>
 									<p className="font-big-shoulders text-[18px] tracking-[0.05em]">

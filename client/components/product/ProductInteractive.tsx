@@ -42,7 +42,7 @@ export default function ProductInteractive({ product }: { product: Product }) {
 	}, [selectedColor])
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col">
 
 			{/* Image Slider */}
 			<div ref={sliderRef} className="overflow-x-auto flex snap-x snap-mandatory scrollbar-none bg-black">
@@ -51,63 +51,91 @@ export default function ProductInteractive({ product }: { product: Product }) {
 						<Image
 							src={image?.src || "/products/white_tee.png"}
 							alt={image?.altText ?? product.title}
-							width={200}
-							height={300}
-							sizes="40vw"
+							width={600}
+							height={900}
+							sizes="(min-width: 768px) 50vw, 100vw"
 							priority={i === 0}
 							onLoad={() => { if (i === 0) setImageLoaded(true) }}
 							style={i === 0 ? { opacity: imageLoaded ? 1 : 0, transition: "opacity 0.3s ease" } : {}}
-							className="mx-auto w-[70%] aspect-2/3 object-cover object-center"
+							className="mx-auto w-full aspect-2/3 object-cover object-center"
 						/>
 					</div>
 				))}
 			</div>
 
-			<div>
-				<h4 className="text-[20px] font-big-shoulders tracking-[0.1em] font-semibold">{product.title}</h4>
-				<p className="font-mono font-thin">£{parseFloat(selectedVariant.price.amount).toFixed(2)}</p>
-			</div>
+			{/* Details */}
+			<div className="px-6 py-6 flex flex-col gap-6">
 
-			{/* Color Selector */}
-			<div className="flex flex-col gap-2">
-				<span className="font-mono font-thin text-sm text-white/60">Color: {selectedColor}</span>
-				<div className="flex gap-2">
-					{colors.map((color) => (
-						<button
-							key={color}
-							onClick={() => handleColorSelect(color)}
-							className={`px-3 py-1 border ${selectedColor === color ? "border-white" : "border-white/30"}`}
-						>
-							{color}
-						</button>
-					))}
+				{/* Title + Price */}
+				<div className="flex items-start justify-between gap-4">
+					<h2 className="font-big-shoulders text-[22px] tracking-[0.08em] uppercase font-semibold leading-tight">
+						{product.title}
+					</h2>
+					<p className="font-mono text-[16px] text-white/80 shrink-0">
+						£{parseFloat(selectedVariant.price.amount).toFixed(2)}
+					</p>
 				</div>
-			</div>
 
-			{/* Size Selector */}
-			<div className="flex flex-col gap-2">
-				<span className="font-mono font-thin text-sm text-white/60">Size</span>
-				<div className="flex gap-2">
-					{sizesForColor.map(({ variant, size, available }: any) => (
-						<button
-							key={variant.id}
-							disabled={!available}
-							onClick={() => setSelectedVariant(variant)}
-							className={`px-3 py-1 border ${selectedVariant.id === variant.id ? "border-white" : "border-white/30"} ${!available ? "opacity-30 line-through" : ""}`}
-						>
-							{size}
-						</button>
-					))}
+				{/* Color Selector */}
+				<div className="flex flex-col gap-3">
+					<p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
+						Colour — <span className="text-white">{selectedColor}</span>
+					</p>
+					<div className="flex gap-2 flex-wrap">
+						{colors.map((color) => (
+							<button
+								key={color}
+								onClick={() => handleColorSelect(color)}
+								className={`px-4 py-2 font-mono text-[11px] tracking-widest uppercase transition-colors border ${
+									selectedColor === color
+										? "border-white text-white"
+										: "border-white/20 text-white/40 hover:border-white/50"
+								}`}
+							>
+								{color}
+							</button>
+						))}
+					</div>
 				</div>
+
+				{/* Size Selector */}
+				<div className="flex flex-col gap-3">
+					<p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">Size</p>
+					<div className="flex gap-2 flex-wrap">
+						{sizesForColor.map(({ variant, size, available }: any) => (
+							<button
+								key={variant.id}
+								disabled={!available}
+								onClick={() => setSelectedVariant(variant)}
+								className={`px-4 py-2 font-mono text-[11px] tracking-widest uppercase transition-colors border ${
+									selectedVariant.id === variant.id
+										? "border-white text-white"
+										: "border-white/20 text-white/40 hover:border-white/50"
+								} ${!available ? "opacity-20 line-through cursor-not-allowed" : ""}`}
+							>
+								{size}
+							</button>
+						))}
+					</div>
+				</div>
+
+				{/* Add to Cart */}
+				{selectedVariant.quantityAvailable > 0 ? (
+					<AddToCart merchandiseId={selectedVariant.id} />
+				) : (
+					<button disabled className="w-full py-4 border border-white/20 font-big-shoulders text-[13px] tracking-[0.2em] uppercase opacity-30 cursor-not-allowed">
+						Out of Stock
+					</button>
+				)}
+
+				{/* Description */}
+				{product.description && (
+					<div className="border-t border-white/10 pt-6">
+						<p className="font-mono text-[12px] text-white/50 leading-relaxed">{product.description}</p>
+					</div>
+				)}
+
 			</div>
-
-			{selectedVariant.quantityAvailable > 0 ? (
-				<AddToCart merchandiseId={selectedVariant.id} />
-			) : (
-				<button disabled className="opacity-50">Out of Stock</button>
-			)}
-
-			<p className="font-mono font-thin text-sm">{product.description}</p>
 		</div>
 	)
 }

@@ -3,6 +3,8 @@ import LoginForm from "@/components/auth/LoginForm"
 
 export default function LoginPage() {
 	return (
-		<main><LoginForm />
-			</main>)
+		<main>
+			<LoginForm />
+		</main>
+	)
 }

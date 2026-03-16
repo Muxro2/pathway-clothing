@@ -26,6 +26,15 @@ export default function NavBar() {
 		}
 	}, [isMenuOpen, isCartOpen])
 
+	useEffect(() => {
+		const setVh = () => {
+			document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+		}
+		setVh()
+		window.addEventListener('resize', setVh)
+		return () => window.removeEventListener('resize', setVh)
+	}, [])
+
 	const { scrollY } = useScroll();
 	const blur = useTransform(scrollY, [0, 100], ['blur(0px)', 'blur(6px)'])
 	const boxShadow = useTransform(scrollY, [0, 100], ['0 0px 0px rgba(0,0,0,0)', '0 4px 12px rgba(0,0,0,0.6)'])
@@ -42,7 +51,7 @@ export default function NavBar() {
 
 			<motion.div
 				style={{ backdropFilter: blur, boxShadow, backgroundImage: bgColor }}
-				className="relative z-[100] flex justify-between items-center px-4 py-3 md:px-8"
+				className="relative z-[100] flex justify-between items-center px-4 py-4 md:px-8"
 			>
 				{/* Left — Menu */}
 				<button
@@ -60,7 +69,11 @@ export default function NavBar() {
 				</button>
 
 				{/* Center — Logo */}
-				<Link href="/" className="absolute left-1/2 -translate-x-1/2 z-[100]">
+				<Link
+					href="/"
+					onClick={() => { setIsCartOpen(false); setIsMenuOpen(false) }}
+					className="absolute left-1/2 -translate-x-1/2 z-[100]"
+				>
 					<Image
 						src="/images/logo.png"
 						alt="Pathway"

@@ -23,7 +23,7 @@ export default function AddToCart({ merchandiseId }: { merchandiseId: string }) 
 		<button
 			onClick={handleAddToCart}
 			disabled={loading}
-			className="my-4 p-4 border border-white disabled:opacity-50 transition-colors"
+			className="w-full py-4 bg-white text-black font-big-shoulders text-[13px] tracking-[0.2em] uppercase font-semibold hover:bg-white/90 transition-colors disabled:opacity-50"
 		>
 			{loading ? "Adding..." : added ? "Added ✓" : "Add to Cart"}
 		</button>

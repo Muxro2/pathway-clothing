@@ -1,55 +1,56 @@
+// lib/getProducts.ts
 import { shopifyFetch } from "./shopify"
 import { Product } from "@/types/productTypes";
 
-export async function getProducts() {
-	const data = await shopifyFetch(`
-		{
-  products(first: 100, sortKey: CREATED_AT, reverse: true) {
-    edges {
-      node {
-        id
-        title
-        handle
-        description
-        vendor
-        productType
-        tags
-        availableForSale
-        variants(first: 150) {
-          edges {
-            node {
-              id
-              sku
-              price { amount }
-              compareAtPrice { amount }
-              quantityAvailable
-              requiresShipping
-              taxable
-              image {
-                src: url
-                altText
-              }
-              selectedOptions {
-                name
-                value
+const PRODUCT_QUERY = `
+  {
+    products(first: 100, sortKey: CREATED_AT, reverse: true) {
+      edges {
+        node {
+          id
+          title
+          handle
+          description
+          vendor
+          productType
+          tags
+          availableForSale
+          variants(first: 150) {
+            edges {
+              node {
+                id
+                sku
+                price { amount }
+                compareAtPrice { amount }
+                quantityAvailable
+                requiresShipping
+                taxable
+                image {
+                  src: url
+                  altText
+                }
+                selectedOptions {
+                  name
+                  value
+                }
               }
             }
           }
-        }
-        images(first: 10) {
-          edges {
-            node {
-              src: url
-              altText
+          images(first: 10) {
+            edges {
+              node {
+                src: url
+                altText
+              }
             }
           }
         }
       }
     }
   }
-}
-	`);
+`
 
+function mapProducts(data: any) {
   return data.data.products.edges.map((edge: any) => {
     const node = edge.node;
     const variants = node.variants.edges.map((e: any) => e.node);
@@ -73,8 +74,20 @@ export async function getProducts() {
   });
 }
 
-export async function getProduct(handle: string) {
-  const products = await getProducts();
-  return products.find((p: Product) => p.handle === handle);
+// All products except early-access — used everywhere public
+export async function getProducts() {
+  const data = await shopifyFetch(PRODUCT_QUERY)
+  return mapProducts(data).filter((p: any) => !p.tags.includes("early"))
 }
 
+// All products including early-access — used only on members page
+export async function getAllProducts() {
+  const data = await shopifyFetch(PRODUCT_QUERY)
+  return mapProducts(data)
+}
+
+// Single product by handle — used on product page
+export async function getProduct(handle: string) {
+  const products = await getAllProducts()
+  return products.find((p: Product) => p.handle === handle)
+}
