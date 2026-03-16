@@ -1,9 +1,12 @@
+// components/layout/TopBar.tsx
 import Image from "next/image";
 
 export default function TopBar() {
 	return (
-			<p className="w-full py-1 bg-red-600 text-[12px] text-center text-white z-100">
-			Free shipping over £100
+		<div className="w-full py-2 bg-white text-black z-100">
+			<p className="font-mono text-[10px] text-center tracking-[0.3em] uppercase">
+				Free Shipping Over £100
 			</p>
+		</div>
 	);
 }

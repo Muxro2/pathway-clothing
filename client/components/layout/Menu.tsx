@@ -1,67 +1,66 @@
+// components/layout/Menu.tsx
 "use client"
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"; 
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
-export default function Menu({isMenuOpen, setIsMenuOpen}: {isMenuOpen: boolean, setIsMenuOpen: (isMenuOpen: boolean) => void}) {
+export default function Menu({ isMenuOpen, setIsMenuOpen }: { isMenuOpen: boolean, setIsMenuOpen: (isMenuOpen: boolean) => void }) {
 
-  
-	
-	return (
-		<AnimatePresence>
-			{isMenuOpen &&
-<motion.div 
-	initial={{ x: "-100%", opacity: 0 }}
-	animate={{ x: 0, opacity: 1 }}
-	exit={{ x: "-100%", opacity: 0 }}
-	transition={{ type: "tween", duration: 0.3 }}
-	className="fixed top-0 w-full">
-		<main className="menu pt-32 px-4 w-full z-90 h-screen bg-black">
-			  <motion.nav
-					initial={{ x: "-50%", opacity: 0 }}
-					animate={{ x: 0, opacity: 1 }}
-					exit={{ x: "-50%", opacity: 0 }}
-					transition={{ type: "tween", duration: 0.2, delay: 0.2 }}
-					className="flex flex-col text-center gap-2">
-        <section>
-          <h3 className="py-2">Shop</h3>
-          <ul>
-            <li>
-              <Link href="/catalog?category=Hoodies" onClick={() => setIsMenuOpen(false)}>Hoodies</Link>
-            </li>
-            <li>
-              <Link href="/catalog?category=Tracksuits" onClick={() => setIsMenuOpen(false)}>Tracksuits</Link>
-            </li>
-            <li>
-              <Link href="/catalog?category=Jackets" onClick={() => setIsMenuOpen(false)}>Jackets</Link>
-            </li>
-            <li>
-              <Link href="/catalog?category=T-Shirts" onClick={() => setIsMenuOpen(false)}>T-Shirts</Link>
-            </li>
-            <li>
-              <Link href="/catalog?category=Accessories" onClick={() => setIsMenuOpen(false)}>Accessories</Link>
-            </li>
-          </ul>
-        </section>
+  return (
+    <AnimatePresence>
+      {isMenuOpen && (
+        <motion.div
+          initial={{ x: "-100%", opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: "-100%", opacity: 0 }}
+          transition={{ type: "tween", duration: 0.3 }}
+          className="fixed top-0 left-0 w-full md:w-[380px] h-screen z-[50] bg-black border-r border-white/10"
+        >
+          <div className="pt-32 px-8 flex flex-col gap-10">
 
-        <section>
-          <h3 className="py-2">Information</h3>
-          <ul>
-            <li>
-              <Link href="/privacy-policy" onClick={() => setIsMenuOpen(false)}>Privacy Policy</Link>
-            </li>
-            <li>
-              <Link href="/terms-and-conditions" onClick={() => setIsMenuOpen(false)}>Terms and Conditions</Link>
-            </li>
-            <li>
-              <Link href="/returns" onClick={() => setIsMenuOpen(false)}>Returns</Link>
-            </li>
-          </ul>
-        </section>
-      </motion.nav>
-		</main>
-</motion.div>
-			}
-			</AnimatePresence>
-	);
+            {/* Shop */}
+            <div className="flex flex-col gap-3">
+              <p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">Shop</p>
+              <ul className="flex flex-col gap-2">
+                {["Hoodies", "Tracksuits", "Jackets", "T-Shirts", "Accessories"].map((cat) => (
+                  <li key={cat}>
+                    <Link
+                      href={`/catalog?category=${cat}`}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="font-big-shoulders text-[28px] tracking-[0.05em] uppercase font-semibold hover:opacity-50 transition-opacity"
+                    >
+                      {cat}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Info */}
+            <div className="flex flex-col gap-3">
+              <p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">Information</p>
+              <ul className="flex flex-col gap-2">
+                {[
+                  { label: "Privacy Policy", href: "/privacy-policy" },
+                  { label: "Terms & Conditions", href: "/terms-and-conditions" },
+                  { label: "Returns", href: "/returns" },
+                ].map(({ label, href }) => (
+                  <li key={label}>
+                    <Link
+                      href={href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="font-mono text-[13px] text-white/50 tracking-widest uppercase hover:text-white transition-colors"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }

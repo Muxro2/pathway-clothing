@@ -1,9 +1,8 @@
+// FeaturedPicksTabs.tsx
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Product } from "@/types/productTypes";
-
 import ProductCarousel from "./product/ProductCarousel";
 
 export default function FeaturedPicksTabs({ tops, jackets }: { tops: Product[], jackets: Product[] }) {
@@ -11,20 +10,21 @@ export default function FeaturedPicksTabs({ tops, jackets }: { tops: Product[], 
 	const products = activeTab === "tops" ? tops : jackets;
 
 	return (
-		<>
-			<div className="flex">
-				<h4
-					onClick={() => setActiveTab("tops")}
-					className={`p-4 text-[20px] font-big-shoulders tracking-[0.1em] font-semibold uppercase cursor-pointer ${activeTab !== "tops" && "opacity-50"}`}
-				>Tops</h4>
-				<h4
-					onClick={() => setActiveTab("jackets")}
-					className={`p-4 text-[20px] font-big-shoulders tracking-[0.1em] font-semibold uppercase cursor-pointer ${activeTab !== "jackets" && "opacity-50"}`}
-				>Jackets</h4>
+		<div className="flex flex-col gap-2">
+			<div className="flex gap-6 px-4 border-b border-white/10">
+				{["tops", "jackets"].map((tab) => (
+					<button
+						key={tab}
+						onClick={() => setActiveTab(tab)}
+						className={`pb-3 font-big-shoulders text-[13px] tracking-[0.2em] uppercase transition-all border-b-2 -mb-px ${
+							activeTab === tab ? "border-white text-white" : "border-transparent text-white/40"
+						}`}
+					>
+						{tab}
+					</button>
+				))}
 			</div>
-			<div className="w-full flex overflow-x-scroll">
-				<ProductCarousel products={products}/>
-			</div>
-		</>
+			<ProductCarousel products={products} />
+		</div>
 	);
 }

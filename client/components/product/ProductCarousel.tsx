@@ -1,3 +1,4 @@
+// components/product/ProductCarousel.tsx
 "use client";
 
 import { useRef } from "react";
@@ -23,10 +24,15 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 		<motion.div
 			ref={ref}
 			style={{ maskImage }}
-			className="w-full p-4 flex gap-2 overflow-x-scroll"
+			className="w-full px-4 py-2 flex gap-3 overflow-x-scroll"
 		>
 			{products.map((product: Product, i: number) => (
-				<ProductCard key={product.id} product={product} className="w-[40%]" priority={i < 2} />
+				<ProductCard
+					key={product.id}
+					product={product}
+					className="w-[42vw] md:w-[22vw] lg:w-[16vw]"
+					priority={i < 2}
+				/>
 			))}
 		</motion.div>
 	);
