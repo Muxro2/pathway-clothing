@@ -3,7 +3,8 @@
 export default function LogoutButton() {
 	const handleLogout = () => {
 		document.cookie = "shopify_token=; path=/; max-age=0"
-		window.location.href = "/login"
+		localStorage.removeItem("pathway_newsletter_timer")
+		window.location.href = "/"
 	}
 
 	return (

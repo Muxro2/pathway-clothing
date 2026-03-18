@@ -1,18 +1,27 @@
-// components/auth/LoginForm.tsx
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { shopifyFetch } from "@/lib/shopify"
 
 type Mode = "login" | "register"
 
 export default function LoginForm({ requestedMode }: { requestedMode?: Mode }) {
-	const [mode, setMode] = useState<Mode>(requestedMode || "login")
-	const [email, setEmail] = useState("")
+	const searchParams = useSearchParams()
+	const paramMode = searchParams.get("mode") as Mode | null
+	const paramEmail = searchParams.get("email") ?? ""
+
+	const [mode, setMode] = useState<Mode>(paramMode || requestedMode || "login")
+	const [email, setEmail] = useState(paramEmail)
 	const [password, setPassword] = useState("")
 	const [firstName, setFirstName] = useState("")
 	const [lastName, setLastName] = useState("")
 	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
+
+	useEffect(() => {
+		if (paramMode) setMode(paramMode)
+		if (paramEmail) setEmail(paramEmail)
+	}, [paramMode, paramEmail])
 
 	const handleLogin = async () => {
 		setLoading(true)
@@ -46,7 +55,7 @@ export default function LoginForm({ requestedMode }: { requestedMode?: Mode }) {
 					customerUserErrors { message }
 				}
 			}
-		`, { input: { firstName, lastName, email, password } })
+		`, { input: { firstName, lastName, email, password, acceptsMarketing: true } })
 
 		const result = data.data.customerCreate
 		if (result.customerUserErrors.length > 0) {
@@ -63,7 +72,6 @@ export default function LoginForm({ requestedMode }: { requestedMode?: Mode }) {
 		<div className="min-h-screen flex items-center justify-center px-6">
 			<div className="w-full max-w-sm flex flex-col gap-10">
 
-				{/* Header */}
 				<div className="flex flex-col gap-2">
 					<p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
 						{mode === "login" ? "Welcome Back" : "New Member"}
@@ -78,7 +86,6 @@ export default function LoginForm({ requestedMode }: { requestedMode?: Mode }) {
 					</p>
 				</div>
 
-				{/* Form */}
 				<div className="flex flex-col gap-6">
 					{mode === "register" && (
 						<div className="flex gap-6">
@@ -126,7 +133,6 @@ export default function LoginForm({ requestedMode }: { requestedMode?: Mode }) {
 					</button>
 				</div>
 
-				{/* Toggle */}
 				<p className="font-mono text-[11px] text-white/30 text-center tracking-widest">
 					{mode === "login" ? "Don't have an account?" : "Already have an account?"}{" "}
 					<button
